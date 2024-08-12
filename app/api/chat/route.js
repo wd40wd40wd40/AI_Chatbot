@@ -17,7 +17,7 @@ export async function POST(req) {
             },
             ...data,
             ],
-            model: 'llama3-8b-8192', // Ensure this is a valid model ID
+            model: 'gemma2-9b-it', // Ensure this is a valid model ID
             stream: true,
         });
 
