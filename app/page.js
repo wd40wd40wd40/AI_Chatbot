@@ -116,7 +116,7 @@ export default function Home() {
                     : 'secondary.main'
                 }
                 color="white"
-                borderRadius={16}
+                borderRadius={8}
                 p={3}
               >
                 {message.content}

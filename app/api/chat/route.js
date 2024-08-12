@@ -1,41 +1,53 @@
-import {NextResponse} from 'next/server'
-import OpenAI from 'openai'
+import { NextResponse } from 'next/server';
+import Groq from 'groq-sdk';
 
-const systemPrompt = `You are a friend. Have a friendly conversation`
+const systemPrompt = `You are a friend. Have a friendly conversation`;
 
-export async function POST(req){
-    const openai = new OpenAI()
-    const data = await req.json
-    const completion = await openai.chat.completions.create({
-        messages: [{
-            role: 'system',
-            content: systemPrompt
+export async function POST(req) {
+    const groq = new Groq({
+        apiKey: process.env.GROQAI_API_KEY, // Assuming GroqAI uses an API key
+    });
+    const data = await req.json();
 
-        }, 
-    ...data,],
-    model:'gpt-4o-mini',
-    stream: true,
-    })
+    try {
+        const completion = await groq.chat.completions.create({
+            messages: [{
+                role: 'system',
+                content: systemPrompt
+            },
+            ...data,
+            ],
+            model: 'llama3-8b-8192', // Ensure this is a valid model ID
+            stream: true,
+        });
 
-    const stream = new ReadableStream({
-        async start(controller){
-            const encoder = new TextEncoder()
-            try{
-                for await (const chunk of completion){
-                    const content = chunk.choices[0]?.delta?.content
-                    if (content) {
-                        const text = encoder.encode(content)
-                        controller.enqueue(text)
+        const stream = new ReadableStream({
+            async start(controller) {
+                const encoder = new TextEncoder();
+                try {
+                    for await (const chunk of completion) {
+                        const content = chunk.choices[0]?.delta?.content;
+                        if (content) {
+                            const text = encoder.encode(content);
+                            controller.enqueue(text);
+                        }
                     }
+                } catch (error) {
+                    console.error('Error while streaming content:', error);
+                    controller.error(error); // Use the `error` object passed in
+                } finally {
+                    controller.close();
                 }
             }
-            catch(error){
-                controller.error(err)
-            }
-            finally {
-                controller.close()
-            }
-        }
-    })
-    return new NextResponse(stream)
+        });
+
+        return new NextResponse(stream);
+
+    } catch (error) {
+        console.error('Error in POST handler:', error);
+        return new NextResponse(JSON.stringify({ error: 'Failed to generate a response.' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
 }
