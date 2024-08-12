@@ -1,7 +1,9 @@
 'use client'
-
-import { Box, Button, Stack, TextField } from '@mui/material'
+import { Box, Button, Stack, TextField, } from '@mui/material'
 import { useState, useRef, useEffect } from 'react'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Icon } from '@iconify/react'
+import ReactMarkdown from 'react-markdown';
 
 
 export default function Home() {
@@ -14,6 +16,17 @@ export default function Home() {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#e2e8f0', // Replace with your desired primary color
+      },
+      secondary: {
+        main: '#c4b5fd', // Replace with your desired secondary color
+      },
+    },
+  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({behavior: 'smooth'})
@@ -79,69 +92,116 @@ export default function Home() {
   }
 
   return (
-    <Box
-      width="100vw"
-      height="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        direction={'column'}
-        width="500px"
-        height="700px"
-        border="1px solid black"
-        p={2}
-        spacing={3}
+    <ThemeProvider theme={theme}>
+      <Box
+        width="100vw"
+        height="100vh"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        //bgcolor="#ffffff"
       >
         <Stack
           direction={'column'}
-          spacing={2}
-          flexGrow={1}
-          overflow="auto"
-          maxHeight="100%"
+          width="550px"
+          height="700px"
+          border="1px solid black"
+          p={2}
+          spacing={3}
+          bgcolor="#ffffff"
+          sx={{
+            borderRadius: '10px',
+          }}
         >
-          {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === 'assistant' ? 'flex-start' : 'flex-end'
-              }
-            >
+          <Stack
+            direction={'column'}
+            spacing={2}
+            flexGrow={1}
+            overflow="auto"
+            maxHeight="100%"
+          >
+            {messages.map((message, index) => (
               <Box
-                bgcolor={
-                  message.role === 'assistant'
-                    ? 'primary.main'
-                    : 'secondary.main'
+                key={index}
+                display="flex"
+                justifyContent={
+                  message.role === 'assistant' ? 'flex-start' : 'flex-end'
                 }
-                color="white"
-                borderRadius={16}
-                p={3}
               >
-                {message.content}
+                <Box
+                  bgcolor={
+                    message.role === 'assistant'
+                      ? 'primary.main'
+                      : 'secondary.main'
+                  }
+                  color="#000000"
+                  borderRadius={message.role === 'assistant'
+                    ? '10px 10px 10px 0px'
+                    : '10px 10px 0px 10px'
+                  }
+                  p={1.5}
+                >
+                  <ReactMarkdown>
+                    {message.content}
+                  </ReactMarkdown>
+                </Box>
               </Box>
-            </Box>
-          ))}
-          <div ref={messagesEndRef} />
+            ))}
+            <div ref={messagesEndRef} />
+          </Stack>
+          <Stack direction={'row'} spacing={2}>
+            <TextField
+              borderRadius='14px'
+              placeholder='Type your message...'
+              fullWidth
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              disabled={isLoading}
+              InputProps={{
+                sx: {
+                  bgcolor: "#e2e8f0",
+                },
+                endAdornment: (
+                  <Button 
+                    variant="contained" 
+                    onClick={sendMessage} 
+                    disabled={isLoading}
+                    disableRipple
+                    sx={{
+                      boxShadow: 'none',
+                      padding: 0,
+                      fontSize: '28px',
+                      minWidth: 'auto',
+                      bgcolor: 'transparent',
+                      '&:hover': {
+                        bgcolor: 'transparent',
+                        boxShadow: 'none',
+                      },
+                      '&:hover .icon': {
+                        color: '#52525b', // Custom hover color
+                      },
+                      '&:active .icon': {
+                        color: '#2196f3', // Custom active (click) color
+                      },
+                    }}
+                  >
+                    <Icon 
+                      icon="uil:telegram-alt" 
+                      className='icon'
+                      sx={{
+                        color: '#52525b',
+                        transition: 'color 0.5s ease',
+                      }}
+                    />
+                  </Button>
+                ),
+              }}
+            />
+          </Stack>
         </Stack>
-        <Stack direction={'row'} spacing={2}>
-          <TextField
-            label="Message"
-            fullWidth
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            disabled={isLoading}
-          />
-          <Button variant="contained" onClick={sendMessage} disabled={isLoading}>
-            {
-              isLoading ? 'Sending...': 'Send'
-            }
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </ThemeProvider>
   )
 }

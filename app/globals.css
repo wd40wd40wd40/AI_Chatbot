@@ -4,4 +4,23 @@
   padding: 0;
   margin: 0;
 }
+/*
+.body {
+ background: linear-gradient(50deg, #d1d5db , #fafafa 20px, #f4f4f5 20px);
+}*/
 
+ul {
+  padding-left: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+ol {
+  padding-left: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+li {
+  margin-bottom: 8px;
+}
