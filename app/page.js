@@ -105,7 +105,7 @@ export default function Home() {
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          backgroundImage: `url(/images/1.png)`, // Update to your desired image
+          backgroundImage: `url(/images/7.png)`, // Update to your desired image
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           width: '100vw',
@@ -117,36 +117,61 @@ export default function Home() {
           backdropFilter: 'blur(8px)',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '8px 16px',
-            bgcolor: 'ffffff',
-            borderRadius: '8px 8px 0 0',
-            boxShadow: 1,
-            marginBottom: '1px',
-            maxWidth: '600px',
-            margin: '0 auto',
-          }}
-        >
-          <Avatar sx={{ bgcolor: 'secondary.main', marginRight: '8px' }}>
-            <Icon icon='uil:heartbeat' />
-          </Avatar>
-          <Typography variant="h6" sx={{ color: '#000000' }}>
-            Willow's Harbor
-          </Typography>
-        </Box>
+       <Box
+  sx={{
+    display: 'flex',
+    // border: '1px solid black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '8px 16px',
+    bgcolor: 'white',
+    borderRadius: '8px 8px 0 0',  // Rounded corners on top
+    boxShadow: `
+      0 0 10px rgba(128, 0, 128, 0.4),    /* Purple glow */
+      0 0 20px rgba(128, 0, 128, 0.3), 
+      0 0 30px rgba(0, 255, 0, 0.2),      /* Green glow */
+      0 0 40px rgba(0, 255, 0, 0.15)`,    /* Softer, larger green glow */
+    marginBottom: '0px',  // Space between header and chat area
+    maxWidth: '600px', 
+    margin: '0 auto',
+}}
+
+
+>
+  <Avatar sx={{ bgcolor: 'transparent',  marginRight: '3px', alignItems: 'center', display: 'flex'}}>
+    <Icon icon='uil:heartbeat' fontSize='50px' color='#000000'/>
+  </Avatar>
+  <Typography
+    variant="h6"
+    sx={{
+      color: '#000000',
+      fontSize: '24px',
+      textShadow: `
+        0 0 5px rgba(0, 0, 0, 0.1),  /* Light blue glow */
+        0 0 10px rgba(0, 0, 0, 0.1), 
+        0 0 15px rgba(0, 0, 0, 0.1), 
+        0 0 20px rgba(0, 00, 0, 0.1)`  /* Stronger outer glow */
+    }}
+  >
+    WillowAI
+  </Typography>
+</Box>
+
         <Stack
           direction={'column'}
           width="600px"
           height="700px"
-          border="1px solid black"
+          // border="1px solid black"
           p={2}
           spacing={3}
           bgcolor="#ffffff"
           sx={{
             borderRadius: '10px',
+            boxShadow: `
+            0 0 10px rgba(128, 0, 128, 0.4),    /* Purple glow */
+            0 0 20px rgba(128, 0, 128, 0.3), 
+            0 0 30px rgba(0, 255, 0, 0.2),      /* Green glow */
+            0 0 40px rgba(0, 255, 0, 0.15)`,    /* Softer, larger green glow */
             overflow: 'hidden', // To ensure content doesn't overflow the border
           }}
         >
@@ -249,19 +274,25 @@ export default function Home() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            bgcolor: '#c4b5fd',
+            bgcolor: 'rgba(196, 181, 253, 1)',
             color: '#000000',
             padding: '10px',
             position: 'fixed',
             bottom: 0,
             width: '100%',
+            // borderTop: '1px solid black',
+            boxShadow: `
+            0 0 10px rgba(128, 0, 128, 0.4),    /* Purple glow */
+            0 0 20px rgba(128, 0, 128, 0.3), 
+            0 0 30px rgba(0, 255, 0, 0.2),      /* Green glow */
+            0 0 40px rgba(0, 255, 0, 0.15)`,    /* Softer, larger green glow */
           }}
         >
           <Typography
             variant="body2"
             sx={{
               mr: 2,
-              width: "600px",
+              width: "center",
               margin: '0 auto',
               display: 'inline',
             }}
@@ -271,13 +302,13 @@ export default function Home() {
               href="https://linkedin.com/in/a-petrosyan"
               target="_blank"
               sx={{
-                color: '#ffffff',
+                color: '#000',
                 textDecoration: 'underline',
                 textDecorationColor: 'inherit',
                 textUnderlineOffset: '4px',
                 fontWeight: 600,
                 '&:visited': {
-                  color: 'inherit',
+                  color: '000',
                 },
               }}
             >
@@ -287,13 +318,13 @@ export default function Home() {
               href="https://linkedin.com/in/gregory-simonyan/"
               target="_blank"
               sx={{
-                color: '#ffffff',
+                color: '#000',
                 textDecoration: 'underline',
                 textDecorationColor: 'inherit',
                 textUnderlineOffset: '4px',
                 fontWeight: 600,
                 '&:visited': {
-                  color: 'inherit',
+                  color: '000',
                 },
               }}
             >
@@ -304,31 +335,31 @@ export default function Home() {
               href="https://linkedin.com/in/levon-gyulgyulyan/"
               target="_blank"
               sx={{
-                color: '#ffffff',
+                color: '#000',
                 textDecoration: 'underline',
                 textDecorationColor: 'inherit',
                 textUnderlineOffset: '4px',
                 fontWeight: 600,
                 '&:visited': {
-                  color: 'inherit',
+                  color: '000',
                 },
               }}
             >
               Levon
-            </Link>{', '}
-            The source code is available on{' '}
+            </Link>{'. '}
+            The source code is available on
             <Link
               href="https://github.com/wd40wd40wd40/AI_Chatbot"
               target="_blank"
               sx={{
-                color: '#ffffff',
+                color: '#000',
                 textDecoration: 'underline',
                 textDecorationColor: 'inherit',
                 textUnderlineOffset: '4px',
                 fontWeight: 600,
                 ml: 0.5,
                 '&:visited': {
-                  color: 'inherit',
+                  color: '#000',
                 },
               }}
             >
